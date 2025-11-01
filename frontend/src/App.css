@@ -1,0 +1,295 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.App-header {
+  text-align: center;
+  color: white;
+  padding: 40px 20px;
+}
+
+.App-header h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.App-header p {
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+.App-main {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.query-section textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+
+.query-section textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.query-section button[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  margin-top: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.query-section button[type="submit"]:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.query-section button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sample-questions {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.sample-questions p {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #666;
+}
+
+.sample-btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sample-btn:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+}
+
+.error-box {
+  margin: 20px 0;
+  padding: 15px;
+  background: #fee;
+  border: 2px solid #fcc;
+  border-radius: 10px;
+  color: #c00;
+}
+
+.response-section {
+  margin-top: 30px;
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 15px;
+}
+
+.response-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.response-header h2 {
+  color: #333;
+}
+
+.metadata {
+  display: flex;
+  gap: 10px;
+}
+
+.badge {
+  padding: 5px 15px;
+  background: #667eea;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.confidence {
+  padding: 5px 15px;
+  background: #4caf50;
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.solution-content {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.no-solution-message {
+  margin: 0;
+  color: #555;
+  font-weight: 500;
+}
+
+.sources {
+  margin: 20px 0;
+  padding: 15px;
+  background: #fff3e0;
+  border-radius: 10px;
+}
+
+.sources ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.sources a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.sources a:hover {
+  text-decoration: underline;
+}
+
+.feedback-section {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #e0e0e0;
+}
+
+.feedback-btn {
+  padding: 12px 30px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feedback-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+}
+
+.feedback-form {
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+}
+
+.feedback-form h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.feedback-form label {
+  display: block;
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+.feedback-form input[type="range"] {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.feedback-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.feedback-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.feedback-buttons button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.feedback-buttons button:first-child {
+  background: #4caf50;
+  color: white;
+}
+
+.feedback-buttons button:first-child:hover {
+  background: #45a049;
+}
+
+.feedback-buttons button:last-child {
+  background: #f44336;
+  color: white;
+}
+
+.feedback-buttons button:last-child:hover {
+  background: #da190b;
+}
+
+.App-footer {
+  text-align: center;
+  color: white;
+  padding: 20px;
+  margin-top: 20px;
+  opacity: 0.8;
+}

@@ -1,0 +1,18 @@
+# Minimal requirements for Python 3.9
+fastapi
+uvicorn
+pydantic
+python-multipart
+langchain
+langchain-openai
+langchain-community
+langgraph
+qdrant-client
+sentence-transformers
+openai
+httpx
+python-dotenv
+pyyaml
+loguru
+numpy
+pandas

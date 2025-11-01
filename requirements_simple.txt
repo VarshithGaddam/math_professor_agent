@@ -1,0 +1,31 @@
+# Core Framework
+fastapi
+uvicorn
+pydantic
+python-multipart
+
+# Agent Framework  
+langgraph
+langchain
+langchain-openai
+langchain-community
+
+# Vector Database
+qdrant-client
+sentence-transformers
+
+# LLM & HTTP
+openai
+httpx
+
+# DSPy (optional - comment out if having issues)
+# dspy-ai
+
+# Data Processing
+numpy
+pandas
+
+# Utilities
+python-dotenv
+pyyaml
+loguru

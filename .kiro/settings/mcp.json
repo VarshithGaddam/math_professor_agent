@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "tavily-search": {
+      "command": "uvx",
+      "args": ["mcp-server-tavily"],
+      "env": {
+        "TAVILY_API_KEY": "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"
+      },
+      "disabled": false,
+      "autoApprove": ["search"]
+    }
+  }
+}
