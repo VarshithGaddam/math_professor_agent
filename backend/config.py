@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     
     # OpenRouter Configuration
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
+    # Alternative: Use OpenAI directly
+    # openrouter_base_url: str = "https://api.openai.com/v1"
     
     # Paths
     base_dir: Path = Path(__file__).parent.parent
@@ -45,7 +47,7 @@ class Settings(BaseSettings):
     similarity_threshold: float = 0.5  # Lowered to make KB more accessible
     
     # Guardrail Settings
-    guardrail_enabled: bool = os.getenv("GUARDRAIL_ENABLED", "true").lower() != "false"
+    guardrail_enabled: bool = True  # Re-enabled with better filtering
     allowed_subjects: list = ["mathematics", "physics", "chemistry", "math", "science"]
     
     class Config:

@@ -49,6 +49,49 @@ async def startup_event():
     logger.info("Starting Math Professor Agent API")
     logger.info(f"Using LLM: {settings.llm_model}")
     logger.info(f"Knowledge base: {settings.qdrant_collection_name}")
+    
+    # Validate API keys
+    if not settings.openrouter_api_key:
+        logger.error("❌ OPENROUTER_API_KEY not set! Solution generation will fail.")
+        logger.error("   Get your key from https://openrouter.ai/keys and add it to .env")
+        logger.error("   Format: OPENROUTER_API_KEY=sk-or-v1-...")
+    else:
+        logger.info(f"✓ OpenRouter API key found ({settings.openrouter_api_key[:10]}...)")
+        # Test the API key
+        try:
+            import httpx
+            async with httpx.AsyncClient() as client:
+                test_response = await client.post(
+                    f"{settings.openrouter_base_url}/chat/completions",
+                    headers={
+                        "Authorization": f"Bearer {settings.openrouter_api_key}",
+                        "Content-Type": "application/json"
+                    },
+                    json={
+                        "model": settings.llm_model,
+                        "messages": [{"role": "user", "content": "test"}],
+                        "max_tokens": 5,
+                    },
+                    timeout=10.0
+                )
+                if test_response.status_code == 200:
+                    logger.success("✓ OpenRouter API key is valid and working!")
+                elif test_response.status_code == 401:
+                    logger.error("❌ OpenRouter API key is INVALID or EXPIRED!")
+                    logger.error("   Please check your API key at https://openrouter.ai/keys")
+                    logger.error("   The key should start with 'sk-or-v1-'")
+                else:
+                    logger.warning(f"⚠️  OpenRouter API returned status {test_response.status_code}")
+                    logger.warning("   Key might still work, but please verify")
+        except Exception as e:
+            logger.warning(f"⚠️  Could not test OpenRouter API key: {e}")
+            logger.warning("   This might be a network issue, but please verify your key is correct")
+    
+    if not settings.tavily_api_key:
+        logger.warning("⚠️  TAVILY_API_KEY not set! Web search will not work.")
+        logger.warning("   Get your key from https://tavily.com and add it to .env")
+    else:
+        logger.info("✓ Tavily API key configured")
 
 
 @app.get("/")
@@ -169,8 +212,26 @@ async def run_benchmark(request: BenchmarkRequest):
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy"}
+    """Health check endpoint with API key status."""
+    health_status = {
+        "status": "healthy",
+        "api_keys": {
+            "openrouter": {
+                "configured": bool(settings.openrouter_api_key),
+                "status": "valid" if settings.openrouter_api_key else "missing"
+            },
+            "tavily": {
+                "configured": bool(settings.tavily_api_key),
+                "status": "valid" if settings.tavily_api_key else "missing"
+            }
+        }
+    }
+    
+    if not settings.openrouter_api_key:
+        health_status["status"] = "degraded"
+        health_status["api_keys"]["openrouter"]["error"] = "OPENROUTER_API_KEY not set - solution generation will fail"
+    
+    return health_status
 
 if __name__ == "__main__":
     import uvicorn

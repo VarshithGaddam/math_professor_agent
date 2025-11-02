@@ -206,6 +206,8 @@ Solution:"""
             logger.warning(f"Output guardrail failed: {result.reason}")
             state["answer"] = "I generated a response but it didn't pass quality checks. Please rephrase your question."
             state["confidence_score"] = 0.0
+        else:
+            logger.info(f"Output guardrail passed. Final confidence: {state['confidence_score']:.2%}")
         
         return state
     
@@ -241,28 +243,36 @@ Solution:"""
         confidence = 0.5  # Base confidence
         
         try:
+            logger.info(f"Calculating confidence for route: {state['route_decision']}")
+            
             if state["route_decision"] == RouteDecision.KNOWLEDGE_BASE.value:
                 if state["retrieved_docs"]:
                     best_score = state["retrieved_docs"][0]["score"]
                     confidence = min(best_score, 0.95)
                     logger.info(f"KB confidence calculated: {confidence:.3f} from score {best_score:.3f}")
+                else:
+                    logger.warning("No retrieved docs for KB route, using base confidence")
             else:
                 if state["web_results"]:
                     confidence = 0.7
+                    logger.info(f"Web search confidence: {confidence:.3f} (found {len(state['web_results'])} results)")
                 else:
                     confidence = 0.3
-                logger.info(f"Web search confidence: {confidence:.3f}")
+                    logger.warning("No web results found, using low confidence")
             
             # Check if solution has proper structure
-            if "\\boxed" in state.get("step_by_step_solution", ""):
+            solution = state.get("step_by_step_solution", "")
+            if "\\boxed" in solution:
                 confidence += 0.05
                 logger.info("Added 0.05 confidence for proper solution structure")
+            
+            final_confidence = round(confidence, 2)
+            logger.info(f"Final calculated confidence: {final_confidence:.2%}")
+            return final_confidence
                 
         except Exception as e:
             logger.error(f"Error calculating confidence: {e}")
-            confidence = 0.5
-        
-        return round(confidence, 2)
+            return 0.5
     
     async def process_query(self, question: str) -> QueryResponse:
         """
